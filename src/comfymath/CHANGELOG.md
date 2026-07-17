@@ -13,4 +13,5 @@ Date: 2026-07-17
 - Fixed BOOLEAN sockets
 - Implemented changes, according to original PR of [dnnagy](https://github.com/evanspearman/ComfyMath/pull/15)
 - Updated readme with description of the available nodes
+- Added tests (work in progress)
 - Formatting and cleanup
