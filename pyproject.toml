@@ -1,8 +1,11 @@
 [tool.poetry]
 name = "comfymath"
-version = "0.1.0"
-description = "Math nodes for ComfyUI"
-authors = ["Evan Spearman <evan@spearman.mb.ca>"]
+version = "0.1.1"
+description = "Math nodes for ComfyUI, updated fork"
+authors = [
+    "Evan Spearman <evan@spearman.mb.ca>",
+    "Raphael Stoeckli <https://github.com/rabanti-github>",
+]
 license = "Apache-2.0"
 readme = "README.md"
 
