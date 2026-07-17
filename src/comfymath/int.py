@@ -32,11 +32,11 @@ INT_BINARY_OPERATIONS: Mapping[str, Callable[[int, int], int]] = {
     "Mod": lambda a, b: a % b,
     "Pow": lambda a, b: a**b,
     "And": lambda a, b: a & b,
-    "Nand": lambda a, b: ~a & b,
+    "Nand": lambda a, b: ~(a & b),
     "Or": lambda a, b: a | b,
-    "Nor": lambda a, b: ~a & b,
+    "Nor": lambda a, b: ~(a | b),
     "Xor": lambda a, b: a ^ b,
-    "Xnor": lambda a, b: ~a ^ b,
+    "Xnor": lambda a, b: ~(a ^ b),
     "Shl": lambda a, b: a << b,
     "Shr": lambda a, b: a >> b,
     "Max": lambda a, b: max(a, b),
@@ -75,7 +75,7 @@ class IntUnaryCondition:
             "required": {"op": (list(INT_UNARY_CONDITIONS.keys()),), "a": DEFAULT_INT}
         }
 
-    RETURN_TYPES = ("BOOL",)
+    RETURN_TYPES = ("BOOLEAN",)
     FUNCTION = "op"
     CATEGORY = "math/int"
 
@@ -113,7 +113,7 @@ class IntBinaryCondition:
             }
         }
 
-    RETURN_TYPES = ("BOOL",)
+    RETURN_TYPES = ("BOOLEAN",)
     FUNCTION = "op"
     CATEGORY = "math/int"
 
@@ -121,9 +121,96 @@ class IntBinaryCondition:
         return (INT_BINARY_CONDITIONS[op](a, b),)
 
 
+def _int_fallback_binary(
+    *, fallback_mode: str, a: int, b: int, fallback_value: int
+) -> int:
+    if fallback_mode == "A":
+        return a
+    if fallback_mode == "B":
+        return b
+    return fallback_value
+
+
+def _int_fallback_unary(*, fallback_mode: str, a: int, fallback_value: int) -> int:
+    if fallback_mode == "A":
+        return a
+    return fallback_value
+
+
+class IntUnaryOperationConditional:
+    @classmethod
+    def INPUT_TYPES(cls) -> Mapping[str, Any]:
+        return {
+            "required": {
+                "condition": ("BOOLEAN", {"default": False}),
+                "fallback_mode": (["A", "constant"],),
+                "fallback_value": DEFAULT_INT,
+                "op": (list(INT_UNARY_OPERATIONS.keys()),),
+                "a": DEFAULT_INT,
+            }
+        }
+
+    RETURN_TYPES = ("INT",)
+    FUNCTION = "op"
+    CATEGORY = "math/int"
+
+    def op(
+        self,
+        condition: bool,
+        fallback_mode: str,
+        fallback_value: int,
+        op: str,
+        a: int,
+    ) -> tuple[int]:
+        if condition:
+            return (INT_UNARY_OPERATIONS[op](a),)
+        return (
+            _int_fallback_unary(
+                fallback_mode=fallback_mode, a=a, fallback_value=fallback_value
+            ),
+        )
+
+
+class IntBinaryOperationConditional:
+    @classmethod
+    def INPUT_TYPES(cls) -> Mapping[str, Any]:
+        return {
+            "required": {
+                "condition": ("BOOLEAN", {"default": False}),
+                "fallback_mode": (["A", "B", "constant"],),
+                "fallback_value": DEFAULT_INT,
+                "op": (list(INT_BINARY_OPERATIONS.keys()),),
+                "a": DEFAULT_INT,
+                "b": DEFAULT_INT,
+            }
+        }
+
+    RETURN_TYPES = ("INT",)
+    FUNCTION = "op"
+    CATEGORY = "math/int"
+
+    def op(
+        self,
+        condition: bool,
+        fallback_mode: str,
+        fallback_value: int,
+        op: str,
+        a: int,
+        b: int,
+    ) -> tuple[int]:
+        if condition:
+            return (INT_BINARY_OPERATIONS[op](a, b),)
+        return (
+            _int_fallback_binary(
+                fallback_mode=fallback_mode, a=a, b=b, fallback_value=fallback_value
+            ),
+        )
+
 NODE_CLASS_MAPPINGS = {
     "CM_IntUnaryOperation": IntUnaryOperation,
     "CM_IntUnaryCondition": IntUnaryCondition,
     "CM_IntBinaryOperation": IntBinaryOperation,
     "CM_IntBinaryCondition": IntBinaryCondition,
+    "CM_IntUnaryOperationConditional": IntUnaryOperationConditional,
+    "CM_IntBinaryOperationConditional": IntBinaryOperationConditional,
 }

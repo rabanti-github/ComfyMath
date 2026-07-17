@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from typing import Any, Callable, Mapping
 
 from .float import (
@@ -40,9 +39,9 @@ class NumberUnaryCondition:
             }
         }
 
-    RETURN_TYPES = ("BOOL",)
+    RETURN_TYPES = ("BOOLEAN",)
     FUNCTION = "op"
-    CATEGORY = "math/Number"
+    CATEGORY = "math/number"
 
     def op(self, op: str, a: Number) -> tuple[bool]:
         return (FLOAT_UNARY_CONDITIONS[op](float(a)),)
@@ -78,9 +77,9 @@ class NumberBinaryCondition:
             }
         }
 
-    RETURN_TYPES = ("BOOL",)
+    RETURN_TYPES = ("BOOLEAN",)
     FUNCTION = "op"
-    CATEGORY = "math/float"
+    CATEGORY = "math/number"
 
     def op(self, op: str, a: Number, b: Number) -> tuple[bool]:
         return (FLOAT_BINARY_CONDITIONS[op](float(a), float(b)),)

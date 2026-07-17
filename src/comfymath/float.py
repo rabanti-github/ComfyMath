@@ -151,9 +151,98 @@ class FloatBinaryCondition:
         return (FLOAT_BINARY_CONDITIONS[op](a, b),)
 
 
+def _float_fallback_binary(
+    *, fallback_mode: str, a: float, b: float, fallback_value: float
+) -> float:
+    if fallback_mode == "A":
+        return a
+    if fallback_mode == "B":
+        return b
+    return fallback_value
+
+
+def _float_fallback_unary(
+    *, fallback_mode: str, a: float, fallback_value: float
+) -> float:
+    if fallback_mode == "A":
+        return a
+    return fallback_value
+
+
+class FloatUnaryOperationConditional:
+    @classmethod
+    def INPUT_TYPES(cls) -> Mapping[str, Any]:
+        return {
+            "required": {
+                "condition": ("BOOLEAN", {"default": False}),
+                "fallback_mode": (["A", "constant"],),
+                "fallback_value": DEFAULT_FLOAT,
+                "op": (list(FLOAT_UNARY_OPERATIONS.keys()),),
+                "a": DEFAULT_FLOAT,
+            }
+        }
+
+    RETURN_TYPES = ("FLOAT",)
+    FUNCTION = "op"
+    CATEGORY = "math/float"
+
+    def op(
+        self,
+        condition: bool,
+        fallback_mode: str,
+        fallback_value: float,
+        op: str,
+        a: float,
+    ) -> tuple[float]:
+        if condition:
+            return (FLOAT_UNARY_OPERATIONS[op](a),)
+        return (
+            _float_fallback_unary(
+                fallback_mode=fallback_mode, a=a, fallback_value=fallback_value
+            ),
+        )
+
+
+class FloatBinaryOperationConditional:
+    @classmethod
+    def INPUT_TYPES(cls) -> Mapping[str, Any]:
+        return {
+            "required": {
+                "condition": ("BOOLEAN", {"default": False}),
+                "fallback_mode": (["A", "B", "constant"],),
+                "fallback_value": DEFAULT_FLOAT,
+                "op": (list(FLOAT_BINARY_OPERATIONS.keys()),),
+                "a": DEFAULT_FLOAT,
+                "b": DEFAULT_FLOAT,
+            }
+        }
+
+    RETURN_TYPES = ("FLOAT",)
+    FUNCTION = "op"
+    CATEGORY = "math/float"
+
+    def op(
+        self,
+        condition: bool,
+        fallback_mode: str,
+        fallback_value: float,
+        op: str,
+        a: float,
+        b: float,
+    ) -> tuple[float]:
+        if condition:
+            return (FLOAT_BINARY_OPERATIONS[op](a, b),)
+        return (
+            _float_fallback_binary(
+                fallback_mode=fallback_mode, a=a, b=b, fallback_value=fallback_value
+            ),
+        )
+
 NODE_CLASS_MAPPINGS = {
     "CM_FloatUnaryOperation": FloatUnaryOperation,
     "CM_FloatUnaryCondition": FloatUnaryCondition,
     "CM_FloatBinaryOperation": FloatBinaryOperation,
     "CM_FloatBinaryCondition": FloatBinaryCondition,
+    "CM_FloatUnaryOperationConditional": FloatUnaryOperationConditional,
+    "CM_FloatBinaryOperationConditional": FloatBinaryOperationConditional,
 }

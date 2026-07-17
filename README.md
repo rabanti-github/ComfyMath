@@ -15,5 +15,5 @@ Provides nodes for:
 From the `custom_nodes` directory in your ComfyUI installation, run:
 
 ```sh
-git clone https://github.com/evanspearman/ComfyMath.git
+git clone https://github.com/rabanti-github/ComfyMath.git
 ```
