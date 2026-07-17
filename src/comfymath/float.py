@@ -238,6 +238,7 @@ class FloatBinaryOperationConditional:
             ),
         )
 
+
 NODE_CLASS_MAPPINGS = {
     "CM_FloatUnaryOperation": FloatUnaryOperation,
     "CM_FloatUnaryCondition": FloatUnaryCondition,

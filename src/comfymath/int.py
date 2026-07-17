@@ -206,6 +206,7 @@ class IntBinaryOperationConditional:
             ),
         )
 
+
 NODE_CLASS_MAPPINGS = {
     "CM_IntUnaryOperation": IntUnaryOperation,
     "CM_IntUnaryCondition": IntUnaryCondition,

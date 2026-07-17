@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Any, Mapping, Sequence, Tuple
 
-
 SDXL_SUPPORTED_RESOLUTIONS = [
     (1024, 1024, 1.0),
     (1152, 896, 1.2857142857142858),
@@ -61,7 +60,8 @@ SDXL_EXTENDED_RESOLUTIONS = [
 class Resolution(ABC):
     @classmethod
     @abstractmethod
-    def resolutions(cls) -> Sequence[Tuple[int, int, float]]: ...
+    def resolutions(cls) -> Sequence[Tuple[int, int, float]]:
+        ...
 
     @classmethod
     def INPUT_TYPES(cls) -> Mapping[str, Any]:
@@ -84,7 +84,8 @@ class Resolution(ABC):
 class NearestResolution(ABC):
     @classmethod
     @abstractmethod
-    def resolutions(cls) -> Sequence[Tuple[int, int, float]]: ...
+    def resolutions(cls) -> Sequence[Tuple[int, int, float]]:
+        ...
 
     @classmethod
     def INPUT_TYPES(cls) -> Mapping[str, Any]:
