@@ -16,7 +16,7 @@ class FloatUnaryOperationTest(unittest.TestCase):
             ("Neg", 1.0, -1.0),
             ("Neg", -2.0, 2.0),
             ("Inc", -1.0, 0.0),
-            ("Inc", 10, 11.0),
+            ("Inc", 10.12, 11.12),
             ("Dec", -1.0, -2.0),
             ("Dec", 2.0, 1.0),
             ("Abs", 5.7, 5.7),
@@ -186,86 +186,217 @@ class FloatUnaryConditionTest(unittest.TestCase):
                 result = operation.op(operator, given)
                 self.assertEqual(result, (expected,))
 
-# Binary Float Tests (Operation)
+# Float Unary Operation Tests
 class FloatBinaryOperationTest(unittest.TestCase):
-    def test_div_returns_true_division_result(self) -> None:
-        self.assertEqual(FloatBinaryOperation().op("Div", 7.0, 2.0), (3.5,))
+    def test_true_condition_applies_operation(self) -> None:
+        cases = [
+            ("Add", 1.0, -1.0, 0.0),
+            ("Add", 0.0, 0.0, 0.0),
+            ("Add", -1.0, -1.0, -2.0),
+            ("Add", 1.1, 0.1, 1.2),
+            ("Add", 20.0, 80.0, 100.0),
+            ("Sub", 1.0, -1.0, 2.0),
+            ("Sub", 0.0, 0.0, 0.0),
+            ("Sub", -1.0, -1.0, 0.0),
+            ("Sub", 1.1, 0.1, 1.0),
+            ("Sub", 20.0, 80.0, -60.0),
+            ("Mul", 1.0, -1.0, -1.0),
+            ("Mul", 0.0, 0.0, 0.0),
+            ("Mul", -2.0, -2.0, 4.0),
+            ("Mul", 1.1, 0.1, 0.11),
+            ("Mul", 20.0, 80.0, 1600),
+            ("Div", 1.0, -1.0, -1.0),
+            ("Div", -2.0, -2.0, 1.0),
+            ("Div", 1.1, 0.1, 11.0),
+            ("Div", 20.0, 80.0, 0.25),
+            ("Mod", 1.0, 4.0, 1.0),
+            ("Mod", 100.0, 80.0, 20.0),
+            ("Mod", -100.0, 80.0, 60.0),
+            ("Mod", -100.0, -80.0, -20.0),
+            ("Pow", 1.0, 0.0, 1.0),
+            ("Pow", 1.0, 1.0, 1.0),
+            ("Pow", 1.0, 2.0, 1.0),
+            ("Pow", -1.0, 2.0, 1.0),
+            ("Pow", 2.0, 0.0, 1.0),
+            ("Pow", 2.0, 1.0, 2.0),
+            ("Pow", 2.0, 2.0, 4.0),
+            ("Pow", -2.0, 2.0, 4.0),
+            ("FloorDiv", 10.0, 5.0, 2.0),
+            ("FloorDiv", -10.0, 5.0, -2.0),
+            ("FloorDiv", 20.0, 80.0, 0.0),
+            ("Min", 20.0, 80.0, 20.0),
+            ("Min", -60.0, 20.0, -60.0),
+            ("Min", 80.0, 20.0, 20.0),
+            ("Min", 20.0, -60.0, -60.0),
+            ("Max", 20.0, 80.0, 80.0),
+            ("Max", -60.0, 20.0, 20.0),
+            ("Max", 80.0, 20.0, 80.0),
+            ("Max", 20.0, -60.0, 20.0),
+            ("Log", 8.0, 2.0, 3.0),
+            ("Log", 100.0, 10.0, 2.0),
+            ("Log", 0.25, 2.0, -2.0),
+            ("Log", 27.0, 3.0, 3.0),
+            ("Atan2", 0.0, 0.0, 0.0),
+            ("Atan2", 0.0, -1.0, math.pi),
+            ("Atan2", 0.0, 1.0, 0.0),
+            ("Atan2", 1.0, 1.0, 0.7853981633974483),
+            ("Atan2", 1.0, 0.0, math.pi/2),
+            ("Atan2", 0.5, 0.5, 0.7853981633974483),
+        ]
+        operation = FloatBinaryOperation()
+        for operator, givenA, givenB, expected in cases:
+            with self.subTest(operator=operator, givenA=givenA, givenB=givenB, expected=expected,):
+                result = operation.op(operator, givenA, givenB)
+                self.assertTrue(math.isclose(result[0], expected, rel_tol=1e-12, abs_tol=1e-12)
+)
 
+# Float Unary Operation Zero-Division Tests
+class FloatBinaryOperationZeroDivTest2(unittest.TestCase):
     def test_div_by_zero_raises_zero_division_error(self) -> None:
         with self.assertRaises(ZeroDivisionError):
             FloatBinaryOperation().op("Div", 7.0, 0.0)
 
-# Binary Float Tests (Condition)
+
+# Float Binary Condition Tests
 class FloatBinaryConditionTest(unittest.TestCase):
+    def test_true_condition_applies_operation(self) -> None:
+        cases = [
+            ("Gt", 9.0, 4.0, True),
+            ("Gt", 3.0, 4.0, False),
+            ("Gt", 4.0, 4.0, False),
+            ("Gte", 4.0, 4.0, True),
+            ("Gte", 4.1, 4.0, True),
+            ("Gte", 3.9, 4.0, False),
+            ("Lt", 4.0, 9.0, True),
+            ("Lt", 4.0, 4.0, False),
+            ("Lt", 9.0, 4.0, False),
+            ("Lte", 4.0, 9.0, True),
+            ("Lte", 4.0, 4.0, True),
+            ("Lte", 9.0, 4.0, False),
+            ("Eq", 4.0, 4.0, True),
+            ("Eq", 4.0, 5.0, False),
+            ("Neq", 4.0, 5.0, True),
+            ("Neq", 4.0, 4.0, False),
+        ]
+        operation = FloatBinaryCondition()
+        for operator, givenA, givenB, expected in cases:
+            with self.subTest(operator=operator, givenA=givenA, givenB=givenB, expected=expected,):
+                result = operation.op(operator, givenA, givenB)
+                self.assertEqual(result, (expected,))
 
-    def test_greater_than_returns_true(self) -> None:
-        self.assertEqual(FloatBinaryCondition().op("Gt", 9.0, 4.0), (True,))
-
-    def test_greater_than_returns_false(self) -> None:
-        self.assertEqual(FloatBinaryCondition().op("Gt", 3.0, 4.0), (False,))
-
-    def test_greater_than_returns_false_on_equal_values(self) -> None:
-        self.assertEqual(FloatBinaryCondition().op("Gt", 4.0, 4.0), (False,))
-
-    def test_gte_returns_true_for_equal_values(self) -> None:
-        self.assertEqual(FloatBinaryCondition().op("Gte", 4.0, 4.0), (True,))
-
-    def test_gte_returns_true(self) -> None:
-        self.assertEqual(FloatBinaryCondition().op("Gte", 4.1, 4.0), (True,))
-
-    def test_gte_returns_false(self) -> None:
-        self.assertEqual(FloatBinaryCondition().op("Gte", 3.9, 4.0), (False,))
-
-    def test_lt_returns_true(self) -> None:
-        self.assertEqual(FloatBinaryCondition().op("Lt", 4.0, 9.0), (True,))
-
-    def test_lt_returns_false_for_equal_values(self) -> None:
-        self.assertEqual(FloatBinaryCondition().op("Lt", 4.0, 4.0), (False,))
-
-    def test_lt_returns_false(self) -> None:
-        self.assertEqual(FloatBinaryCondition().op("Lt", 9.0, 4.0), (False,))
-
-    def test_lte_returns_true(self) -> None:
-        self.assertEqual(FloatBinaryCondition().op("Lte", 4.0, 9.0), (True,))
-
-    def test_lte_returns_true_for_equal_values(self) -> None:
-        self.assertEqual(FloatBinaryCondition().op("Lte", 4.0, 4.0), (True,))
-
-    def test_lte_returns_false(self) -> None:
-        self.assertEqual(FloatBinaryCondition().op("Lte", 9.0, 4.0), (False,))
-
-    def test_eq_returns_true_for_equal_values(self) -> None:
-        self.assertEqual(FloatBinaryCondition().op("Eq", 4.0, 4.0), (True,))
-
-    def test_eq_returns_false_for_unequal_values(self) -> None:
-        self.assertEqual(FloatBinaryCondition().op("Eq", 4.0, 5.0), (False,))
-
-    def test_neq_returns_true_for_unequal_values(self) -> None: 
-        self.assertEqual(FloatBinaryCondition().op("Neq", 4.0, 5.0), (True,))
-
-    def test_neq_returns_false_for_equal_values(self) -> None:
-        self.assertEqual(FloatBinaryCondition().op("Neq", 4.0, 4.0), (False,))
 
 # Unary Float Tests (Conditional Operation)
 class FloatUnaryOperationConditionalTest(unittest.TestCase):
-    def test_true_condition_applies_neg_operation(self) -> None:
-        self.assertEqual(FloatUnaryOperationConditional().op(True, "constant", 99.0, "Neg", 2.5), (-2.5,),)
-
-    def test_false_condition_returns_fallback_value(self) -> None:
-        self.assertEqual(FloatUnaryOperationConditional().op(False, "constant", 99.0, "Neg", 2.5), (99.0,),)
-
     def test_true_condition_applies_operation(self) -> None:
-        self.assertEqual(FloatUnaryOperationConditional().op(True, "constant", 99.0, "Neg", 2.5), (-2.5,),)
+        from src.comfymath.float import FLOAT_UNARY_OPERATIONS
 
-    # TODO: Add more tests for FloatUnaryOperationConditional, including different operations.
+        operation_cases = {
+            "Neg": (2.5, -2.5),
+            "Inc": (2.5, 3.5),
+            "Dec": (2.5, 1.5),
+            "Abs": (-2.5, 2.5),
+            "Sqr": (3.0, 9.0),
+            "Cube": (-3.0, -27.0),
+            "Sqrt": (9.0, 3.0),
+            "Exp": (1.0, math.e),
+            "Ln": (math.e, 1.0),
+            "Log10": (100.0, 2.0),
+            "Log2": (8.0, 3.0),
+            "Sin": (math.pi / 2.0, 1.0),
+            "Cos": (math.pi, -1.0),
+            "Tan": (math.pi / 4.0, 1.0),
+            "Asin": (1.0, math.pi / 2.0),
+            "Acos": (0.0, math.pi / 2.0),
+            "Atan": (1.0, math.pi / 4.0),
+            "Sinh": (1.0, 1.1752011936438014),
+            "Cosh": (1.0, 1.5430806348152437),
+            "Tanh": (1.0, 0.7615941559557649),
+            "Asinh": (1.0, 0.881373587019543),
+            "Acosh": (2.0, 1.3169578969248166),
+            "Atanh": (0.5, 0.5493061443340548),
+            "Round": (1.6, 2.0),
+            "Floor": (1.6, 1.0),
+            "Ceil": (1.1, 2.0),
+            "Trunc": (-3.5, -3.0),
+            "Erf": (0.0, 0.0),
+            "Erfc": (0.0, 1.0),
+            "Gamma": (8.0, 5040.0),
+            "Radians": (180.0, math.pi),
+            "Degrees": (math.pi, 180.0),
+        }
+        cases = []
+        for operator in FLOAT_UNARY_OPERATIONS:
+            given, expected = operation_cases[operator]
+            cases.append((True, "constant", 99.0, operator, given, expected))
+            cases.append((False, "constant", 99.0, operator, given, 99.0))
 
+        operation = FloatUnaryOperationConditional()
+        for condition, fallback_mode, fallback_value, operator, given, expected in cases:
+            with self.subTest(
+                condition=condition, operator=operator, given=given, expected=expected
+            ):
+                result = operation.op(
+                    condition, fallback_mode, fallback_value, operator, given
+                )
+                self.assertTrue(
+                    math.isclose(result[0], expected, rel_tol=1e-12, abs_tol=1e-12)
+                )
 
 class FloatBinaryOperationConditionalTest(unittest.TestCase):
     def test_true_condition_applies_operation(self) -> None:
-        self.assertEqual(FloatBinaryOperationConditional().op(True, "constant", 99.0, "Mul", 2.5, 4.0), (10.0,),)
+        from src.comfymath.float import FLOAT_BINARY_OPERATIONS
 
-    def test_false_condition_returns_selected_input(self) -> None:
-        self.assertEqual(FloatBinaryOperationConditional().op(False, "B", 99.0, "Mul", 2.5, 4.0), (4.0,),)
+        operation_cases = {
+            "Add": (20.0, 80.0, 100.0),
+            "Sub": (20.0, 80.0, -60.0),
+            "Mul": (2.5, 4.0, 10.0),
+            "Div": (20.0, 80.0, 0.25),
+            "Mod": (-100.0, 80.0, 60.0),
+            "Pow": (-2.0, 2.0, 4.0),
+            "FloorDiv": (20.0, 80.0, 0.0),
+            "Max": (-60.0, 20.0, 20.0),
+            "Min": (-60.0, 20.0, -60.0),
+            "Log": (8.0, 2.0, 3.0),
+            "Atan2": (1.0, 1.0, math.pi / 4.0),
+        }
+        cases = []
+        for operator in FLOAT_BINARY_OPERATIONS:
+            given_a, given_b, expected = operation_cases[operator]
+            cases.append(
+                (True, "constant", 99.0, operator, given_a, given_b, expected)
+            )
+            cases.append(
+                (False, "constant", 99.0, operator, given_a, given_b, 99.0)
+            )
+
+        operation = FloatBinaryOperationConditional()
+        for (
+            condition,
+            fallback_mode,
+            fallback_value,
+            operator,
+            given_a,
+            given_b,
+            expected,
+        ) in cases:
+            with self.subTest(
+                condition=condition,
+                operator=operator,
+                given_a=given_a,
+                given_b=given_b,
+                expected=expected,
+            ):
+                result = operation.op(
+                    condition,
+                    fallback_mode,
+                    fallback_value,
+                    operator,
+                    given_a,
+                    given_b,
+                )
+                self.assertTrue(
+                    math.isclose(result[0], expected, rel_tol=1e-12, abs_tol=1e-12)
+                )
 
 
 if __name__ == "__main__":
