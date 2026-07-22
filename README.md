@@ -35,6 +35,20 @@ Restart ComfyUI after installation. Nodes are displayed without the internal `CM
 | `BoolUnaryOperation` | Applies a unary boolean operation. Operations: `Not`. | `op`, `a: BOOLEAN` | `BOOLEAN` |
 | `BoolBinaryOperation` | Applies a binary boolean operation. Operations: `Nor`, `Xor`, `Nand`, `And`, `Xnor`, `Or`, `Eq`, `Neq`. | `op`, `a: BOOLEAN`, `b: BOOLEAN` | `BOOLEAN` |
 
+#### Operators
+
+| Operator | Applicable for | Description | Exmaple |
+| --- | --- | --- | --- |
+| `Not` | `BoolUnaryOperation` | Inverts the input value. | `Not True` → `False` |
+| `Nor` | `BoolBinaryOperation` | True only when both inputs are false. | `True Nor False` → `False` |
+| `Xor` | `BoolBinaryOperation` | True when the inputs differ. | `True Xor False` → `True` |
+| `Nand` | `BoolBinaryOperation` | False only when both inputs are true. | `True Nand True` → `False` |
+| `And` | `BoolBinaryOperation` | True only when both inputs are true. | `True And False` → `False` |
+| `Xnor` | `BoolBinaryOperation` | True when the inputs are equal. | `True Xnor True` → `True` |
+| `Or` | `BoolBinaryOperation` | True when either input is true. | `False Or True` → `True` |
+| `Eq` | `BoolBinaryOperation` | Tests whether the inputs are equal. | `True Eq False` → `False` |
+| `Neq` | `BoolBinaryOperation` | Tests whether the inputs differ. | `True Neq False` → `True` |
+
 ### Integer Nodes
 
 | Node | Purpose | Inputs | Outputs |
@@ -46,6 +60,47 @@ Restart ComfyUI after installation. Nodes are displayed without the internal `CM
 | `IntUnaryOperationConditional` | Applies a unary integer operation only when `condition` is true; otherwise returns `a` or `fallback_value`. | `condition: BOOLEAN`, `fallback_mode`, `fallback_value: INT`, `op`, `a: INT` | `INT` |
 | `IntBinaryOperationConditional` | Applies a binary integer operation only when `condition` is true; otherwise returns `a`, `b`, or `fallback_value`. | `condition: BOOLEAN`, `fallback_mode`, `fallback_value: INT`, `op`, `a: INT`, `b: INT` | `INT` |
 
+#### Operators
+
+| Operator | Applicable for | Description | Exmaple |
+| --- | --- | --- | --- |
+| `Abs` | `IntUnaryOperation`, `IntUnaryOperationConditional` | Returns the absolute value. | `Abs -12` → `12` |
+| `Neg` | `IntUnaryOperation`, `IntUnaryOperationConditional` | Negates the input. | `Neg 1` → `-1` |
+| `Inc` | `IntUnaryOperation`, `IntUnaryOperationConditional` | Adds one. | `Inc 10` → `11` |
+| `Dec` | `IntUnaryOperation`, `IntUnaryOperationConditional` | Subtracts one. | `Dec 2` → `1` |
+| `Sqr` | `IntUnaryOperation`, `IntUnaryOperationConditional` | Squares the input. | `Sqr -3` → `9` |
+| `Cube` | `IntUnaryOperation`, `IntUnaryOperationConditional` | Cubes the input. | `Cube -3` → `-27` |
+| `Not` | `IntUnaryOperation`, `IntUnaryOperationConditional` | Applies bitwise NOT. | `Not 4` → `-5` |
+| `Factorial` | `IntUnaryOperation`, `IntUnaryOperationConditional` | Returns the factorial. | `Factorial 5` → `120` |
+| `IsZero` | `IntUnaryCondition` | Tests whether the input is zero. | `IsZero 0` → `True` |
+| `IsNonZero` | `IntUnaryCondition` | Tests whether the input is not zero. | `IsNonZero 4` → `True` |
+| `IsPositive` | `IntUnaryCondition` | Tests whether the input is positive. | `IsPositive 4` → `True` |
+| `IsNegative` | `IntUnaryCondition` | Tests whether the input is negative. | `IsNegative -4` → `True` |
+| `IsEven` | `IntUnaryCondition` | Tests whether the input is even. | `IsEven 2` → `True` |
+| `IsOdd` | `IntUnaryCondition` | Tests whether the input is odd. | `IsOdd 1` → `True` |
+| `Add` | `IntBinaryOperation`, `IntBinaryOperationConditional` | Adds both inputs. | `20 Add 80` → `100` |
+| `Sub` | `IntBinaryOperation`, `IntBinaryOperationConditional` | Subtracts the second input. | `20 Sub 80` → `-60` |
+| `Mul` | `IntBinaryOperation`, `IntBinaryOperationConditional` | Multiplies both inputs. | `20 Mul 80` → `1600` |
+| `Div` | `IntBinaryOperation`, `IntBinaryOperationConditional` | Performs floor division. | `80 Div 20` → `4` |
+| `Mod` | `IntBinaryOperation`, `IntBinaryOperationConditional` | Returns the division remainder. | `100 Mod 80` → `20` |
+| `Pow` | `IntBinaryOperation`, `IntBinaryOperationConditional` | Raises the first input to the second. | `2 Pow 2` → `4` |
+| `And` | `IntBinaryOperation`, `IntBinaryOperationConditional` | Applies bitwise AND. | `2 And 3` → `2` |
+| `Nand` | `IntBinaryOperation`, `IntBinaryOperationConditional` | Applies bitwise NAND. | `10 Nand 3` → `-3` |
+| `Or` | `IntBinaryOperation`, `IntBinaryOperationConditional` | Applies bitwise OR. | `4 Or 6` → `6` |
+| `Nor` | `IntBinaryOperation`, `IntBinaryOperationConditional` | Applies bitwise NOR. | `4 Nor 6` → `-7` |
+| `Xor` | `IntBinaryOperation`, `IntBinaryOperationConditional` | Applies bitwise XOR. | `4 Xor 6` → `2` |
+| `Xnor` | `IntBinaryOperation`, `IntBinaryOperationConditional` | Applies bitwise XNOR. | `4 Xnor 6` → `-3` |
+| `Shl` | `IntBinaryOperation`, `IntBinaryOperationConditional` | Shifts bits left. | `4 Shl 4` → `64` |
+| `Shr` | `IntBinaryOperation`, `IntBinaryOperationConditional` | Shifts bits right. | `-1 Shr 2` → `-1` |
+| `Max` | `IntBinaryOperation`, `IntBinaryOperationConditional` | Returns the larger input. | `20 Max 80` → `80` |
+| `Min` | `IntBinaryOperation`, `IntBinaryOperationConditional` | Returns the smaller input. | `20 Min 80` → `20` |
+| `Eq` | `IntBinaryCondition` | Tests whether the inputs are equal. | `4 Eq 4` → `True` |
+| `Neq` | `IntBinaryCondition` | Tests whether the inputs differ. | `4 Neq 5` → `True` |
+| `Gt` | `IntBinaryCondition` | Tests whether the first input is greater. | `9 Gt 4` → `True` |
+| `Lt` | `IntBinaryCondition` | Tests whether the first input is smaller. | `4 Lt 9` → `True` |
+| `Geq` | `IntBinaryCondition` | Tests whether the first input is greater or equal. | `4 Geq 4` → `True` |
+| `Leq` | `IntBinaryCondition` | Tests whether the first input is smaller or equal. | `4 Leq 9` → `True` |
+
 ### Float Nodes
 
 | Node | Purpose | Inputs | Outputs |
@@ -56,6 +111,71 @@ Restart ComfyUI after installation. Nodes are displayed without the internal `CM
 | `FloatBinaryCondition` | Compares two float values. Conditions: `Eq`, `Neq`, `Gt`, `Gte`, `Lt`, `Lte`. | `op`, `a: FLOAT`, `b: FLOAT` | `BOOLEAN` |
 | `FloatUnaryOperationConditional` | Applies a unary float operation only when `condition` is true; otherwise returns `a` or `fallback_value`. | `condition: BOOLEAN`, `fallback_mode`, `fallback_value: FLOAT`, `op`, `a: FLOAT` | `FLOAT` |
 | `FloatBinaryOperationConditional` | Applies a binary float operation only when `condition` is true; otherwise returns `a`, `b`, or `fallback_value`. | `condition: BOOLEAN`, `fallback_mode`, `fallback_value: FLOAT`, `op`, `a: FLOAT`, `b: FLOAT` | `FLOAT` |
+
+#### Operators
+
+| Operator | Applicable for | Description | Exmaple |
+| --- | --- | --- | --- |
+| `Neg` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Negates the input. | `Neg 2.5` → `-2.5` |
+| `Inc` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Adds one. | `Inc 10.12` → `11.12` |
+| `Dec` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Subtracts one. | `Dec 2.0` → `1.0` |
+| `Abs` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Returns the absolute value. | `Abs -12.0` → `12.0` |
+| `Sqr` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Squares the input. | `Sqr -3.0` → `9.0` |
+| `Cube` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Cubes the input. | `Cube -3.0` → `-27.0` |
+| `Sqrt` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Returns the square root. | `Sqrt 9.0` → `3.0` |
+| `Exp` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Raises e to the input. | `Exp 1.0` → `2.718...` |
+| `Ln` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Returns the natural logarithm. | `Ln e` → `1.0` |
+| `Log10` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Returns the base-10 logarithm. | `Log10 100.0` → `2.0` |
+| `Log2` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Returns the base-2 logarithm. | `Log2 8.0` → `3.0` |
+| `Sin` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Returns the sine in radians. | `Sin (π / 2)` → `1.0` |
+| `Cos` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Returns the cosine in radians. | `Cos π` → `-1.0` |
+| `Tan` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Returns the tangent in radians. | `Tan (π / 4)` → `1.0` |
+| `Asin` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Returns the inverse sine. | `Asin 1.0` → `π / 2` |
+| `Acos` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Returns the inverse cosine. | `Acos 0.0` → `π / 2` |
+| `Atan` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Returns the inverse tangent. | `Atan 1.0` → `π / 4` |
+| `Sinh` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Returns the hyperbolic sine. | `Sinh 1.0` → `1.1752...` |
+| `Cosh` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Returns the hyperbolic cosine. | `Cosh 0.0` → `1.0` |
+| `Tanh` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Returns the hyperbolic tangent. | `Tanh 1.0` → `0.7615...` |
+| `Asinh` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Returns the inverse hyperbolic sine. | `Asinh 1.0` → `0.8813...` |
+| `Acosh` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Returns the inverse hyperbolic cosine. | `Acosh 1.0` → `0.0` |
+| `Atanh` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Returns the inverse hyperbolic tangent. | `Atanh 0.99` → `2.6466...` |
+| `Round` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Rounds to the nearest integer. | `Round 1.6` → `2.0` |
+| `Floor` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Rounds down. | `Floor 1.6` → `1.0` |
+| `Ceil` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Rounds up. | `Ceil 1.1` → `2.0` |
+| `Trunc` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Removes the fractional part. | `Trunc -3.5` → `-3.0` |
+| `Erf` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Returns the error function. | `Erf 0.0` → `0.0` |
+| `Erfc` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Returns the complementary error function. | `Erfc 0.0` → `1.0` |
+| `Gamma` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Returns the gamma function. | `Gamma 8.0` → `5040.0` |
+| `Radians` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Converts degrees to radians. | `Radians 180.0` → `π` |
+| `Degrees` | `FloatUnaryOperation`, `FloatUnaryOperationConditional` | Converts radians to degrees. | `Degrees π` → `180.0` |
+| `IsZero` | `FloatUnaryCondition` | Tests whether the input is zero. | `IsZero 0.0` → `True` |
+| `IsPositive` | `FloatUnaryCondition` | Tests whether the input is positive. | `IsPositive 4.5` → `True` |
+| `IsNegative` | `FloatUnaryCondition` | Tests whether the input is negative. | `IsNegative -4.5` → `True` |
+| `IsNonZero` | `FloatUnaryCondition` | Tests whether the input is not zero. | `IsNonZero 4.5` → `True` |
+| `IsPositiveInfinity` | `FloatUnaryCondition` | Tests for positive infinity. | `IsPositiveInfinity inf` → `True` |
+| `IsNegativeInfinity` | `FloatUnaryCondition` | Tests for negative infinity. | `IsNegativeInfinity -inf` → `True` |
+| `IsNaN` | `FloatUnaryCondition` | Tests for a NaN value. | `IsNaN nan` → `True` |
+| `IsFinite` | `FloatUnaryCondition` | Tests for a finite value. | `IsFinite 4.5` → `True` |
+| `IsInfinite` | `FloatUnaryCondition` | Tests for either infinity. | `IsInfinite inf` → `True` |
+| `IsEven` | `FloatUnaryCondition` | Tests for an even whole value. | `IsEven 2.0` → `True` |
+| `IsOdd` | `FloatUnaryCondition` | Tests for a non-even value. | `IsOdd 2.1` → `True` |
+| `Add` | `FloatBinaryOperation`, `FloatBinaryOperationConditional` | Adds both inputs. | `20.0 Add 80.0` → `100.0` |
+| `Sub` | `FloatBinaryOperation`, `FloatBinaryOperationConditional` | Subtracts the second input. | `20.0 Sub 80.0` → `-60.0` |
+| `Mul` | `FloatBinaryOperation`, `FloatBinaryOperationConditional` | Multiplies both inputs. | `2.5 Mul 4.0` → `10.0` |
+| `Div` | `FloatBinaryOperation`, `FloatBinaryOperationConditional` | Divides the first input by the second. | `20.0 Div 80.0` → `0.25` |
+| `Mod` | `FloatBinaryOperation`, `FloatBinaryOperationConditional` | Returns the division remainder. | `100.0 Mod 80.0` → `20.0` |
+| `Pow` | `FloatBinaryOperation`, `FloatBinaryOperationConditional` | Raises the first input to the second. | `2.0 Pow 2.0` → `4.0` |
+| `FloorDiv` | `FloatBinaryOperation`, `FloatBinaryOperationConditional` | Divides and rounds down. | `20.0 FloorDiv 80.0` → `0.0` |
+| `Max` | `FloatBinaryOperation`, `FloatBinaryOperationConditional` | Returns the larger input. | `20.0 Max 80.0` → `80.0` |
+| `Min` | `FloatBinaryOperation`, `FloatBinaryOperationConditional` | Returns the smaller input. | `20.0 Min 80.0` → `20.0` |
+| `Log` | `FloatBinaryOperation`, `FloatBinaryOperationConditional` | Returns a logarithm with the given base. | `8.0 Log 2.0` → `3.0` |
+| `Atan2` | `FloatBinaryOperation`, `FloatBinaryOperationConditional` | Returns the angle from two coordinates. | `1.0 Atan2 1.0` → `π / 4` |
+| `Eq` | `FloatBinaryCondition` | Tests whether the inputs are equal. | `4.0 Eq 4.0` → `True` |
+| `Neq` | `FloatBinaryCondition` | Tests whether the inputs differ. | `4.0 Neq 5.0` → `True` |
+| `Gt` | `FloatBinaryCondition` | Tests whether the first input is greater. | `9.0 Gt 4.0` → `True` |
+| `Gte` | `FloatBinaryCondition` | Tests whether the first input is greater or equal. | `4.0 Gte 4.0` → `True` |
+| `Lt` | `FloatBinaryCondition` | Tests whether the first input is smaller. | `4.0 Lt 9.0` → `True` |
+| `Lte` | `FloatBinaryCondition` | Tests whether the first input is smaller or equal. | `4.0 Lte 9.0` → `True` |
 
 ### Number Nodes
 
