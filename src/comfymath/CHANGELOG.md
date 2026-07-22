@@ -15,3 +15,12 @@ Date: 2026-07-17
 - Updated readme with description of the available nodes
 - Added tests (work in progress)
 - Formatting and cleanup
+
+## v 0.1.2
+
+Date: 2026-07-22
+
+- Added `NumberUnaryOperationConditional`
+- Added `NumberBinaryOperationConditional`
+- Updated readme with operators
+- Added unit test

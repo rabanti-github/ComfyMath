@@ -2,7 +2,7 @@
 
 ComfyMath provides math and utility nodes for [ComfyUI](https://github.com/comfyanonymous/ComfyUI).
 
-The package currently registers **59 custom nodes** under the `math/...` categories. Most operation nodes expose an `op` dropdown, so one node can perform several related operations.
+The package currently registers **61 custom nodes** under the `math/...` categories. Most operation nodes expose an `op` dropdown, so one node can perform several related operations.
 
 ## Features
 
@@ -35,7 +35,7 @@ Restart ComfyUI after installation. Nodes are displayed without the internal `CM
 | `BoolUnaryOperation` | Applies a unary boolean operation. Operations: `Not`. | `op`, `a: BOOLEAN` | `BOOLEAN` |
 | `BoolBinaryOperation` | Applies a binary boolean operation. Operations: `Nor`, `Xor`, `Nand`, `And`, `Xnor`, `Or`, `Eq`, `Neq`. | `op`, `a: BOOLEAN`, `b: BOOLEAN` | `BOOLEAN` |
 
-#### Operators
+#### Boolean Operators
 
 | Operator | Applicable for | Description | Exmaple |
 | --- | --- | --- | --- |
@@ -60,7 +60,7 @@ Restart ComfyUI after installation. Nodes are displayed without the internal `CM
 | `IntUnaryOperationConditional` | Applies a unary integer operation only when `condition` is true; otherwise returns `a` or `fallback_value`. | `condition: BOOLEAN`, `fallback_mode`, `fallback_value: INT`, `op`, `a: INT` | `INT` |
 | `IntBinaryOperationConditional` | Applies a binary integer operation only when `condition` is true; otherwise returns `a`, `b`, or `fallback_value`. | `condition: BOOLEAN`, `fallback_mode`, `fallback_value: INT`, `op`, `a: INT`, `b: INT` | `INT` |
 
-#### Operators
+#### Integer Operators
 
 | Operator | Applicable for | Description | Exmaple |
 | --- | --- | --- | --- |
@@ -112,7 +112,7 @@ Restart ComfyUI after installation. Nodes are displayed without the internal `CM
 | `FloatUnaryOperationConditional` | Applies a unary float operation only when `condition` is true; otherwise returns `a` or `fallback_value`. | `condition: BOOLEAN`, `fallback_mode`, `fallback_value: FLOAT`, `op`, `a: FLOAT` | `FLOAT` |
 | `FloatBinaryOperationConditional` | Applies a binary float operation only when `condition` is true; otherwise returns `a`, `b`, or `fallback_value`. | `condition: BOOLEAN`, `fallback_mode`, `fallback_value: FLOAT`, `op`, `a: FLOAT`, `b: FLOAT` | `FLOAT` |
 
-#### Operators
+#### Float Operators
 
 | Operator | Applicable for | Description | Exmaple |
 | --- | --- | --- | --- |
@@ -179,7 +179,7 @@ Restart ComfyUI after installation. Nodes are displayed without the internal `CM
 
 ### Number Nodes
 
-`NUMBER` accepts integer or float-like values and runs the same operation sets as the float nodes after converting inputs to `float`.
+`NUMBER` accepts integer or float-like values and runs the same operation sets as the **float nodes** after converting inputs to `float`.
 
 | Node | Purpose | Inputs | Outputs |
 | --- | --- | --- | --- |
@@ -187,6 +187,8 @@ Restart ComfyUI after installation. Nodes are displayed without the internal `CM
 | `NumberUnaryCondition` | Tests a generic number with the float-style unary conditions. | `op`, `a: NUMBER` | `BOOLEAN` |
 | `NumberBinaryOperation` | Applies a float-style binary operation to two generic numbers. | `op`, `a: NUMBER`, `b: NUMBER` | `NUMBER` |
 | `NumberBinaryCondition` | Compares two generic numbers with the float-style binary conditions. | `op`, `a: NUMBER`, `b: NUMBER` | `BOOLEAN` |
+| `NumberUnaryOperationConditional` | Applies a unary number operation only when `condition` is true; otherwise returns `a` or `fallback_value`. | `condition: BOOLEAN`, `fallback_mode`, `fallback_value: NUMBER`, `op`, `a: NUMBER` | `NUMBER` |
+| `NumberBinaryOperationConditional` | Applies a binary number operation only when `condition` is true; otherwise returns `a`, `b`, or `fallback_value`. | `condition: BOOLEAN`, `fallback_mode`, `fallback_value: NUMBER`, `op`, `a: NUMBER`, `b: NUMBER` | `NUMBER` |
 
 ### Vector Nodes
 
@@ -243,6 +245,7 @@ Registered vector node names replace `N` with `2`, `3`, or `4`, for example `Vec
 
 * Math errors are not caught. Examples: division by zero, invalid logarithm/square-root domains, invalid factorial input, and normalizing a zero vector may raise errors or produce non-finite values.
 * Float equality uses exact Python comparison; vector equality uses NumPy `allclose`.
+* Floating-point operations can produce small rounding errors. For example, in a float node, `1.1 + 0.1` may result in `1.2000000000000002` instead of the expected `1.2`
 * Integer `Div` uses floor division (`//`), not true division. Use `IntToFloat` first, then a float or number division node when a fractional result is needed.
 * `FloatToInt` and `NumberToInt` truncate toward zero.
 * `FillVec2`, `FillVec3`, and `FillVec4` classes exist in `convert.py`, but are not referenced elsewhere or registered in `NODE_CLASS_MAPPINGS`. They are currently orphaned/unexposed convenience helpers for creating vectors with all components set to the same value.
@@ -258,4 +261,3 @@ Registered vector node names replace `N` with `2`, `3`, or `4`, for example `Vec
 This repo was originally cloned from <https://github.com/evanspearman/ComfyMath>.
 
 Additional features were added, according to a PR proposal of [dnnagy](https://github.com/evanspearman/ComfyMath/pull/15).
-

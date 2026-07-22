@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "comfymath"
-version = "0.1.1"
+version = "0.1.2"
 description = "Math nodes for ComfyUI, updated fork"
 authors = [
     "Evan Spearman <evan@spearman.mb.ca>",
