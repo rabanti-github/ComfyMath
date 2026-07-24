@@ -92,6 +92,7 @@ class Vec2UnaryOperation:
     RETURN_TYPES = ("VEC2",)
     FUNCTION = "op"
     CATEGORY = "math/vec2"
+    DESCRIPTION = {"Applies vector unary (one input) (one inputs) operations. Operations: Neg, Normalize."}
 
     def op(self, op: str, a: Vec2) -> tuple[Vec2]:
         return (_vec2_from_numpy(VEC_UNARY_OPERATIONS[op](numpy.array(a))),)
@@ -110,6 +111,7 @@ class Vec2ToScalarUnaryOperation:
     RETURN_TYPES = ("FLOAT",)
     FUNCTION = "op"
     CATEGORY = "math/vec2"
+    DESCRIPTION = {"Converts one vector to a scalar. Operations: Norm."}
 
     def op(self, op: str, a: Vec2) -> tuple[float]:
         return (VEC_TO_SCALAR_UNARY_OPERATION[op](numpy.array(a)),)
@@ -128,6 +130,9 @@ class Vec2UnaryCondition:
     RETURN_TYPES = ("BOOLEAN",)
     FUNCTION = "op"
     CATEGORY = "math/vec2"
+    DESCRIPTION = {
+        "Tests one vector. Conditions: zero/non-zero and normalized/not normalized."
+    }
 
     def op(self, op: str, a: Vec2) -> tuple[bool]:
         return (VEC_UNARY_CONDITIONS[op](numpy.array(a)),)
@@ -147,6 +152,11 @@ class Vec2BinaryOperation:
     RETURN_TYPES = ("VEC2",)
     FUNCTION = "op"
     CATEGORY = "math/vec2"
+    DESCRIPTION = {
+        "Applies vector binary (two inputs) operations. Operations: Add, Sub, Cross. Note: Cross "
+        "is currently only usable as a Vec3 operation; NumPy returns a scalar for "
+        "Vec2, which does not match this node output conversion, and Vec4 is invalid."
+    }
 
     def op(self, op: str, a: Vec2, b: Vec2) -> tuple[Vec2]:
         return (
@@ -168,6 +178,7 @@ class Vec2ToScalarBinaryOperation:
     RETURN_TYPES = ("FLOAT",)
     FUNCTION = "op"
     CATEGORY = "math/vec2"
+    DESCRIPTION = {"Converts two vectors to a scalar. Operations: Dot, Distance."}
 
     def op(self, op: str, a: Vec2, b: Vec2) -> tuple[float]:
         return (VEC_TO_SCALAR_BINARY_OPERATION[op](numpy.array(a), numpy.array(b)),)
@@ -187,6 +198,7 @@ class Vec2BinaryCondition:
     RETURN_TYPES = ("BOOLEAN",)
     FUNCTION = "op"
     CATEGORY = "math/vec2"
+    DESCRIPTION = {"Compares two vectors. Conditions: Eq, Neq."}
 
     def op(self, op: str, a: Vec2, b: Vec2) -> tuple[bool]:
         return (VEC_BINARY_CONDITIONS[op](numpy.array(a), numpy.array(b)),)
@@ -206,6 +218,9 @@ class Vec2ScalarOperation:
     RETURN_TYPES = ("VEC2",)
     FUNCTION = "op"
     CATEGORY = "math/vec2"
+    DESCRIPTION = {
+        "Applies scalar multiplication or division to a vector. Operations: Mul, Div."
+    }
 
     def op(self, op: str, a: Vec2, b: float) -> tuple[Vec2]:
         return (_vec2_from_numpy(VEC_SCALAR_OPERATION[op](numpy.array(a), b)),)
@@ -224,6 +239,7 @@ class Vec3UnaryOperation:
     RETURN_TYPES = ("VEC3",)
     FUNCTION = "op"
     CATEGORY = "math/vec3"
+    DESCRIPTION = {"Applies vector unary (one input) operations. Operations: Neg, Normalize."}
 
     def op(self, op: str, a: Vec3) -> tuple[Vec3]:
         return (_vec3_from_numpy(VEC_UNARY_OPERATIONS[op](numpy.array(a))),)
@@ -242,6 +258,7 @@ class Vec3ToScalarUnaryOperation:
     RETURN_TYPES = ("FLOAT",)
     FUNCTION = "op"
     CATEGORY = "math/vec3"
+    DESCRIPTION = {"Converts one vector to a scalar. Operations: Norm."}
 
     def op(self, op: str, a: Vec3) -> tuple[float]:
         return (VEC_TO_SCALAR_UNARY_OPERATION[op](numpy.array(a)),)
@@ -260,6 +277,9 @@ class Vec3UnaryCondition:
     RETURN_TYPES = ("BOOLEAN",)
     FUNCTION = "op"
     CATEGORY = "math/vec3"
+    DESCRIPTION = {
+        "Tests one vector. Conditions: zero/non-zero and normalized/not normalized."
+    }
 
     def op(self, op: str, a: Vec3) -> tuple[bool]:
         return (VEC_UNARY_CONDITIONS[op](numpy.array(a)),)
@@ -279,6 +299,11 @@ class Vec3BinaryOperation:
     RETURN_TYPES = ("VEC3",)
     FUNCTION = "op"
     CATEGORY = "math/vec3"
+    DESCRIPTION = {
+        "Applies vector binary (two inputs) operations. Operations: Add, Sub, Cross. Note: Cross "
+        "is currently only usable as a Vec3 operation; NumPy returns a scalar for "
+        "Vec2, which does not match this node output conversion, and Vec4 is invalid."
+    }
 
     def op(self, op: str, a: Vec3, b: Vec3) -> tuple[Vec3]:
         return (
@@ -300,6 +325,7 @@ class Vec3ToScalarBinaryOperation:
     RETURN_TYPES = ("FLOAT",)
     FUNCTION = "op"
     CATEGORY = "math/vec3"
+    DESCRIPTION = {"Converts two vectors to a scalar. Operations: Dot, Distance."}
 
     def op(self, op: str, a: Vec3, b: Vec3) -> tuple[float]:
         return (VEC_TO_SCALAR_BINARY_OPERATION[op](numpy.array(a), numpy.array(b)),)
@@ -319,6 +345,7 @@ class Vec3BinaryCondition:
     RETURN_TYPES = ("BOOLEAN",)
     FUNCTION = "op"
     CATEGORY = "math/vec3"
+    DESCRIPTION = {"Compares two vectors. Conditions: Eq, Neq."}
 
     def op(self, op: str, a: Vec3, b: Vec3) -> tuple[bool]:
         return (VEC_BINARY_CONDITIONS[op](numpy.array(a), numpy.array(b)),)
@@ -338,6 +365,9 @@ class Vec3ScalarOperation:
     RETURN_TYPES = ("VEC3",)
     FUNCTION = "op"
     CATEGORY = "math/vec3"
+    DESCRIPTION = {
+        "Applies scalar multiplication or division to a vector. Operations: Mul, Div."
+    }
 
     def op(self, op: str, a: Vec3, b: float) -> tuple[Vec3]:
         return (_vec3_from_numpy(VEC_SCALAR_OPERATION[op](numpy.array(a), b)),)
@@ -356,6 +386,7 @@ class Vec4UnaryOperation:
     RETURN_TYPES = ("VEC4",)
     FUNCTION = "op"
     CATEGORY = "math/vec4"
+    DESCRIPTION = {"Applies vector unary (one input) operations. Operations: Neg, Normalize."}
 
     def op(self, op: str, a: Vec4) -> tuple[Vec4]:
         return (_vec4_from_numpy(VEC_UNARY_OPERATIONS[op](numpy.array(a))),)
@@ -374,6 +405,7 @@ class Vec4ToScalarUnaryOperation:
     RETURN_TYPES = ("FLOAT",)
     FUNCTION = "op"
     CATEGORY = "math/vec4"
+    DESCRIPTION = {"Converts one vector to a scalar. Operations: Norm."}
 
     def op(self, op: str, a: Vec4) -> tuple[float]:
         return (VEC_TO_SCALAR_UNARY_OPERATION[op](numpy.array(a)),)
@@ -392,6 +424,9 @@ class Vec4UnaryCondition:
     RETURN_TYPES = ("BOOLEAN",)
     FUNCTION = "op"
     CATEGORY = "math/vec4"
+    DESCRIPTION = {
+        "Tests one vector. Conditions: zero/non-zero and normalized/not normalized."
+    }
 
     def op(self, op: str, a: Vec4) -> tuple[bool]:
         return (VEC_UNARY_CONDITIONS[op](numpy.array(a)),)
@@ -411,6 +446,11 @@ class Vec4BinaryOperation:
     RETURN_TYPES = ("VEC4",)
     FUNCTION = "op"
     CATEGORY = "math/vec4"
+    DESCRIPTION = {
+        "Applies vector binary (two inputs) operations. Operations: Add, Sub, Cross. Note: Cross "
+        "is currently only usable as a Vec3 operation; NumPy returns a scalar for "
+        "Vec2, which does not match this node output conversion, and Vec4 is invalid."
+    }
 
     def op(self, op: str, a: Vec4, b: Vec4) -> tuple[Vec4]:
         return (
@@ -432,6 +472,7 @@ class Vec4ToScalarBinaryOperation:
     RETURN_TYPES = ("FLOAT",)
     FUNCTION = "op"
     CATEGORY = "math/vec4"
+    DESCRIPTION = {"Converts two vectors to a scalar. Operations: Dot, Distance."}
 
     def op(self, op: str, a: Vec4, b: Vec4) -> tuple[float]:
         return (VEC_TO_SCALAR_BINARY_OPERATION[op](numpy.array(a), numpy.array(b)),)
@@ -451,6 +492,7 @@ class Vec4BinaryCondition:
     RETURN_TYPES = ("BOOLEAN",)
     FUNCTION = "op"
     CATEGORY = "math/vec4"
+    DESCRIPTION = {"Compares two vectors. Conditions: Eq, Neq."}
 
     def op(self, op: str, a: Vec4, b: Vec4) -> tuple[bool]:
         return (VEC_BINARY_CONDITIONS[op](numpy.array(a), numpy.array(b)),)
@@ -470,6 +512,9 @@ class Vec4ScalarOperation:
     RETURN_TYPES = ("VEC4",)
     FUNCTION = "op"
     CATEGORY = "math/vec4"
+    DESCRIPTION = {
+        "Applies scalar multiplication or division to a vector. Operations: Mul, Div."
+    }
 
     def op(self, op: str, a: Vec4, b: float) -> tuple[Vec4]:
         return (_vec4_from_numpy(VEC_SCALAR_OPERATION[op](numpy.array(a), b)),)

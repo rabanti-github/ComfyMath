@@ -1,8 +1,8 @@
-# ComfyMath
+# ComfyMath (updated)
 
 ComfyMath provides math and utility nodes for [ComfyUI](https://github.com/comfyanonymous/ComfyUI).
 
-The package currently registers **61 custom nodes** under the `math/...` categories. Most operation nodes expose an `op` dropdown, so one node can perform several related operations.
+The package currently registers **63 custom nodes** under the `math/...` categories. Most operation nodes expose an `op` dropdown, so one node can perform several related operations.
 
 ## Features
 
@@ -14,7 +14,7 @@ Provides nodes for:
 * Conditional value selection and conditional arithmetic fallbacks
 * Vec2, Vec3, and Vec4 arithmetic, scalar operations, and vector checks
 * Type conversion and vector compose/breakout helpers
-* SDXL resolution helpers
+* SDXL preset and model-agnostic resolution helpers
 
 ## Installation
 
@@ -206,6 +206,27 @@ The same node families are provided for `VEC2`, `VEC3`, and `VEC4`.
 
 Registered vector node names replace `N` with `2`, `3`, or `4`, for example `Vec2UnaryOperation`, `Vec3ScalarOperation`, and `Vec4ToScalarBinaryOperation`.
 
+#### Vector Operators
+
+| Operator | Applicable for | Description | Example |
+| --- | --- | --- | --- |
+| `Neg` | `VecNUnaryOperation` | Negates every vector component. | `Neg (1, -2)` → `(-1, 2)` |
+| `Normalize` | `VecNUnaryOperation` | Divides the vector by its Euclidean norm to produce a unit vector. | `Normalize (3, 4)` → `(0.6, 0.8)` |
+| `Norm` | `VecNToScalarUnaryOperation` | Returns the Euclidean length of the vector. | `Norm (3, 4)` → `5` |
+| `IsZero` | `VecNUnaryCondition` | Tests whether every component is zero. | `IsZero (0, 0)` → `True` |
+| `IsNotZero` | `VecNUnaryCondition` | Tests whether at least one component is non-zero. | `IsNotZero (0, 1)` → `True` |
+| `IsNormalized` | `VecNUnaryCondition` | Tests whether the vector has unit length. | `IsNormalized (1, 0)` → `True` |
+| `IsNotNormalized` | `VecNUnaryCondition` | Tests whether the vector does not have unit length. | `IsNotNormalized (3, 4)` → `True` |
+| `Add` | `VecNBinaryOperation` | Adds corresponding components. | `(1, 2) Add (3, 4)` → `(4, 6)` |
+| `Sub` | `VecNBinaryOperation` | Subtracts corresponding components of the second vector from the first. | `(3, 4) Sub (1, 2)` → `(2, 2)` |
+| `Cross` | `Vec3BinaryOperation` | Returns the three-dimensional cross product. | `(1, 0, 0) Cross (0, 1, 0)` → `(0, 0, 1)` |
+| `Dot` | `VecNToScalarBinaryOperation` | Returns the sum of the products of corresponding components. | `(1, 2) Dot (3, 4)` → `11` |
+| `Distance` | `VecNToScalarBinaryOperation` | Returns the Euclidean distance between both vectors. | `(0, 0) Distance (3, 4)` → `5` |
+| `Eq` | `VecNBinaryCondition` | Tests whether corresponding components are approximately equal. | `(1, 2) Eq (1, 2)` → `True` |
+| `Neq` | `VecNBinaryCondition` | Tests whether the vectors are not approximately equal. | `(1, 2) Neq (1, 3)` → `True` |
+| `Mul` | `VecNScalarOperation` | Multiplies every vector component by a scalar. | `(1, -2) Mul 3` → `(3, -6)` |
+| `Div` | `VecNScalarOperation` | Divides every vector component by a scalar. | `(4, -2) Div 2` → `(2, -1)` |
+
 ### Conversion Nodes
 
 | Node | Purpose | Inputs | Outputs |
@@ -240,6 +261,20 @@ Registered vector node names replace `N` with `2`, `3`, or `4`, for example `Vec
 | `NearestSDXLResolution` | Chooses the standard SDXL preset whose aspect ratio is nearest to the input image. | `image: IMAGE` | `width: INT`, `height: INT` |
 | `SDXLExtendedResolution` | Selects one of the extended SDXL width/height presets. | `resolution` | `width: INT`, `height: INT` |
 | `NearestSDXLExtendedResolution` | Chooses the extended SDXL preset whose aspect ratio is nearest to the input image. | `image: IMAGE` | `width: INT`, `height: INT` |
+| `AspectRatioResolution` | Calculates dimensions near a target megapixel count for a selected aspect ratio and pixel multiple. | `aspect_ratio`, `megapixels: FLOAT`, `multiple: INT` | `width: INT`, `height: INT` |
+| `ImageAspectResolution` | Calculates dimensions near a target megapixel count using an input image's aspect ratio and a pixel multiple. | `image: IMAGE`, `megapixels: FLOAT`, `multiple: INT` | `width: INT`, `height: INT` |
+
+#### Resolution Guidance
+
+The generic resolution nodes are preferable to separate preset nodes for modern model families because those models support flexible dimensions rather than one authoritative finite preset list. A megapixel value is an approximate target; rounding to the requested pixel multiple can produce a slightly larger or smaller image.
+
+| Model family | Resolution guidance | Suggested generic-node settings |
+| --- | --- | --- |
+| [Stable Diffusion 1.5](https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5) | The base model was fine-tuned at 512×512. | `1:1`, `0.25` MP, multiple `64` |
+| [Stable Diffusion 2](https://huggingface.co/stabilityai/stable-diffusion-2-1) | Use 512×512 for base checkpoints and 768×768 for the 768-series checkpoints. | `1:1`, `0.25` or `0.5625` MP, multiple `64` |
+| [Stable Diffusion 3.5](https://platform.stability.ai/docs/api-reference) | Approximately 1 MP is the standard target, with several supported aspect ratios. Local runtimes can support additional dimensions. | `1.0` MP; use the pixel multiple required by the local workflow |
+| [FLUX.1](https://github.com/black-forest-labs/flux) | Model variants and runtimes differ; 1 MP is a practical starting point rather than a fixed preset requirement. | `1.0` MP; use the pixel multiple required by the selected variant |
+| [FLUX.2](https://help.bfl.ai/articles/8531149640-what-are-the-resolution-limits) | Supports any aspect ratio from 64×64 up to 4 MP in multiples of 16; up to 2 MP is recommended for quality and speed. | `1.0`–`2.0` MP, multiple `16` |
 
 ## Limitations
 
