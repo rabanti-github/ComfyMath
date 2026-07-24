@@ -29,9 +29,9 @@ class BoolUnaryOperation:
     RETURN_TYPES = ("BOOLEAN",)
     FUNCTION = "op"
     CATEGORY = "math/bool"
-    DESCRIPTION = {
+    DESCRIPTION = (
         "Applies a unary (one input) boolean operation. Operations: Not."
-    }
+    )
 
     def op(self, op: str, a: bool) -> tuple[bool]:
         return (BOOL_UNARY_OPERATIONS[op](a),)
@@ -51,9 +51,9 @@ class BoolBinaryOperation:
     RETURN_TYPES = ("BOOLEAN",)
     FUNCTION = "op"
     CATEGORY = "math/bool"
-    DESCRIPTION = {
+    DESCRIPTION = (
         "Applies a binary (two inputs) boolean operation. Operations: Nor, Xor, Nand, And, Xnor, Or, Eq, Neq."
-    }
+    )
 
     def op(self, op: str, a: bool, b: bool) -> tuple[bool]:
         return (BOOL_BINARY_OPERATIONS[op](a, b),)

@@ -63,9 +63,9 @@ class IntUnaryOperation:
     RETURN_TYPES = ("INT",)
     FUNCTION = "op"
     CATEGORY = "math/int"
-    DESCRIPTION = {
+    DESCRIPTION = (
         "Applies a unary (one input) integer operation. Operations: Abs, Neg, Inc, Dec, Sqr, Cube, bitwise Not, Factorial."
-    }
+    )
 
     def op(self, op: str, a: int) -> tuple[int]:
         return (INT_UNARY_OPERATIONS[op](a),)
@@ -81,9 +81,9 @@ class IntUnaryCondition:
     RETURN_TYPES = ("BOOLEAN",)
     FUNCTION = "op"
     CATEGORY = "math/int"
-    DESCRIPTION = {
+    DESCRIPTION = (
         "Tests one integer value. Conditions: zero/non-zero, positive/negative, even/odd."
-    }
+    )
 
     def op(self, op: str, a: int) -> tuple[bool]:
         return (INT_UNARY_CONDITIONS[op](a),)
@@ -103,9 +103,9 @@ class IntBinaryOperation:
     RETURN_TYPES = ("INT",)
     FUNCTION = "op"
     CATEGORY = "math/int"
-    DESCRIPTION = {
+    DESCRIPTION = (
         "Applies a binary (two inputs) integer operation. Operations include arithmetic, bitwise logic, shifts, Max, and Min."
-    }
+    )
 
 
     def op(self, op: str, a: int, b: int) -> tuple[int]:
@@ -126,9 +126,9 @@ class IntBinaryCondition:
     RETURN_TYPES = ("BOOLEAN",)
     FUNCTION = "op"
     CATEGORY = "math/int"
-    DESCRIPTION = {
+    DESCRIPTION = (
         "Compares two integer values. Conditions: Eq, Neq, Gt, Lt, Geq, Leq."
-    }
+    )
 
     def op(self, op: str, a: int, b: int) -> tuple[bool]:
         return (INT_BINARY_CONDITIONS[op](a, b),)
@@ -166,9 +166,9 @@ class IntUnaryOperationConditional:
     RETURN_TYPES = ("INT",)
     FUNCTION = "op"
     CATEGORY = "math/int"
-    DESCRIPTION = {
+    DESCRIPTION = (
         "Applies a unary (one int input, one fallback input) integer operation only when condition is true; otherwise returns a or fallback_value."
-    }
+    )
 
     def op(
         self,
@@ -204,9 +204,9 @@ class IntBinaryOperationConditional:
     RETURN_TYPES = ("INT",)
     FUNCTION = "op"
     CATEGORY = "math/int"
-    DESCRIPTION = {
+    DESCRIPTION = (
         "Applies a binary (two int inputs, one fallback input) integer operation only when condition is true; otherwise returns a, b, or fallback_value."
-    }
+    )
 
     def op(
         self,

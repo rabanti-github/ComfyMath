@@ -15,9 +15,9 @@ class ChooseInt:
     RETURN_TYPES = ("INT",)
     FUNCTION = "op"
     CATEGORY = "math/control"
-    DESCRIPTION = {
+    DESCRIPTION = (
         "Returns a when condition is true, otherwise returns b."
-    }
+    )
 
     def op(self, condition: bool, a: int, b: int) -> tuple[int]:
         return (a if condition else b,)
@@ -37,9 +37,9 @@ class ChooseFloat:
     RETURN_TYPES = ("FLOAT",)
     FUNCTION = "op"
     CATEGORY = "math/control"
-    DESCRIPTION = {
+    DESCRIPTION = (
         "Returns a when condition is true, otherwise returns b."
-    }
+    )
 
     def op(self, condition: bool, a: float, b: float) -> tuple[float]:
         return (a if condition else b,)

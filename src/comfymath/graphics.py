@@ -128,9 +128,9 @@ class Resolution(ABC):
     RETURN_NAMES = ("width", "height")
     FUNCTION = "op"
     CATEGORY = "math/graphics"
-    DESCRIPTION = {
+    DESCRIPTION = (
         "Selects one of the standard or extended SDXL width/height presets."
-    }
+    )
 
     def op(self, resolution: str) -> tuple[int, int]:
         width, height = resolution.split("x")
@@ -151,10 +151,10 @@ class NearestResolution(ABC):
     RETURN_NAMES = ("width", "height")
     FUNCTION = "op"
     CATEGORY = "math/graphics"
-    DESCRIPTION = {
+    DESCRIPTION = (
         "Chooses the standard or extended SDXL preset whose aspect ratio is "
         "nearest to the input image."
-    }
+    )
 
     def op(self, image: Any) -> tuple[int, int]:
         image_size = image.size()
@@ -219,10 +219,10 @@ class AspectRatioResolution:
     RETURN_NAMES = ("width", "height")
     FUNCTION = "op"
     CATEGORY = "math/graphics"
-    DESCRIPTION = {
+    DESCRIPTION = (
         "Calculates a resolution from an aspect ratio, target megapixels, and "
         "pixel multiple."
-    }
+    )
 
     def op(
         self, aspect_ratio: str, megapixels: float, multiple: int
@@ -253,10 +253,10 @@ class ImageAspectResolution:
     RETURN_NAMES = ("width", "height")
     FUNCTION = "op"
     CATEGORY = "math/graphics"
-    DESCRIPTION = {
+    DESCRIPTION = (
         "Calculates a resolution from an image aspect ratio, target megapixels, "
         "and pixel multiple."
-    }
+    )
 
     def op(self, image: Any, megapixels: float, multiple: int) -> tuple[int, int]:
         image_size = image.size()

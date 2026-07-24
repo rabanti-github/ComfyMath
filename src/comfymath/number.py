@@ -24,9 +24,9 @@ class NumberUnaryOperation:
     RETURN_TYPES = ("NUMBER",)
     FUNCTION = "op"
     CATEGORY = "math/number"
-    DESCRIPTION = {
+    DESCRIPTION = (
         "Applies a float-style unary (one input) operation to a generic number. Operations include various operators. See help or readme for a full list."
-    }
+    )
 
     def op(self, op: str, a: Number) -> tuple[float]:
         return (FLOAT_UNARY_OPERATIONS[op](float(a)),)
@@ -45,9 +45,9 @@ class NumberUnaryCondition:
     RETURN_TYPES = ("BOOLEAN",)
     FUNCTION = "op"
     CATEGORY = "math/number"
-    DESCRIPTION = {
+    DESCRIPTION = (
         "Tests a generic number with the float-style unary (one input) conditions. Conditions include various operators. See help or readme for a full list."
-    }
+    )
 
     def op(self, op: str, a: Number) -> tuple[bool]:
         return (FLOAT_UNARY_CONDITIONS[op](float(a)),)
@@ -67,9 +67,9 @@ class NumberBinaryOperation:
     RETURN_TYPES = ("NUMBER",)
     FUNCTION = "op"
     CATEGORY = "math/number"
-    DESCRIPTION = {
+    DESCRIPTION = (
         "Applies a float-style binary (two inputs) operation to two generic numbers. Operations include various operators. See help or readme for a full list."
-    }
+    )
 
     def op(self, op: str, a: Number, b: Number) -> tuple[float]:
         return (FLOAT_BINARY_OPERATIONS[op](float(a), float(b)),)
@@ -89,9 +89,9 @@ class NumberBinaryCondition:
     RETURN_TYPES = ("BOOLEAN",)
     FUNCTION = "op"
     CATEGORY = "math/number"
-    DESCRIPTION = {
+    DESCRIPTION = (
         "Compares two generic numbers with the float-style binary (two inputs) conditions. Conditions include various operators. See help or readme for a full list."
-    }
+    )
 
     def op(self, op: str, a: Number, b: Number) -> tuple[bool]:
         return (FLOAT_BINARY_CONDITIONS[op](float(a), float(b)),)
@@ -131,9 +131,9 @@ class NumberUnaryOperationConditional:
     RETURN_TYPES = ("NUMBER",)
     FUNCTION = "op"
     CATEGORY = "math/number"
-    DESCRIPTION = {
+    DESCRIPTION = (
         "Applies a unary (one number input, one fallback input) number operation only when condition is true; otherwise returns a or fallback_value. Conditions include various operators. See help or readme for a full list."
-    }
+    )
 
     def op(
         self,
@@ -169,9 +169,9 @@ class NumberBinaryOperationConditional:
     RETURN_TYPES = ("NUMBER",)
     FUNCTION = "op"
     CATEGORY = "math/number"
-    DESCRIPTION = {
+    DESCRIPTION = (
         "Applies a binary (two number inputs, one fallback input) number operation only when condition is true; otherwise returns a or fallback_value. Conditions include various operators. See help or readme for a full list."
-    }
+    )
 
     def op(
         self,
