@@ -90,6 +90,10 @@ class FloatUnaryOperation:
     RETURN_TYPES = ("FLOAT",)
     FUNCTION = "op"
     CATEGORY = "math/float"
+    DESCRIPTION = {
+        "Applies a unary (one input) float operation. Operations include various operators. See help or readme for a full list."
+    }
+
 
     def op(self, op: str, a: float) -> tuple[float]:
         return (FLOAT_UNARY_OPERATIONS[op](a),)
@@ -108,6 +112,9 @@ class FloatUnaryCondition:
     RETURN_TYPES = ("BOOLEAN",)
     FUNCTION = "op"
     CATEGORY = "math/float"
+    DESCRIPTION = {
+        "Tests one float value. Conditions include various operators. See help or readme for a full list."
+    }
 
     def op(self, op: str, a: float) -> tuple[bool]:
         return (FLOAT_UNARY_CONDITIONS[op](a),)
@@ -127,6 +134,9 @@ class FloatBinaryOperation:
     RETURN_TYPES = ("FLOAT",)
     FUNCTION = "op"
     CATEGORY = "math/float"
+    DESCRIPTION = {
+        "Applies a binary (two inputs) float operation. Operations include various operators. See help or readme for a full list."
+    }
 
     def op(self, op: str, a: float, b: float) -> tuple[float]:
         return (FLOAT_BINARY_OPERATIONS[op](a, b),)
@@ -146,6 +156,9 @@ class FloatBinaryCondition:
     RETURN_TYPES = ("BOOLEAN",)
     FUNCTION = "op"
     CATEGORY = "math/float"
+    DESCRIPTION = {
+        "Compares two float values. Conditions include various operators. See help or readme for a full list."
+    }
 
     def op(self, op: str, a: float, b: float) -> tuple[bool]:
         return (FLOAT_BINARY_CONDITIONS[op](a, b),)
@@ -185,6 +198,9 @@ class FloatUnaryOperationConditional:
     RETURN_TYPES = ("FLOAT",)
     FUNCTION = "op"
     CATEGORY = "math/float"
+    DESCRIPTION = {
+        "Applies a unary (one float input, one fallback input) float operation only when condition is true; otherwise returns a or fallback_value. Conditions include various operators. See help or readme for a full list."
+    }
 
     def op(
         self,
@@ -220,6 +236,9 @@ class FloatBinaryOperationConditional:
     RETURN_TYPES = ("FLOAT",)
     FUNCTION = "op"
     CATEGORY = "math/float"
+    DESCRIPTION = {
+        "Applies a binary (two float inputs, one fallback input) float operation only when condition is true; otherwise returns a, b, or fallback_value. Conditions include various operators. See help or readme for a full list."
+    }
 
     def op(
         self,

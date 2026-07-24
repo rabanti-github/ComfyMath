@@ -211,7 +211,7 @@ Registered vector node names replace `N` with `2`, `3`, or `4`, for example `Vec
 | Node | Purpose | Inputs | Outputs |
 | --- | --- | --- | --- |
 | `BoolToInt` | Converts `False`/`True` to `0`/`1`. | `a: BOOLEAN` | `INT` |
-| `IntToBool` | Converts `0` to `False` and any other integer to `True`. | `a: INT` | `BOOLEAN` |
+| `IntToBool` | Converts `0` to `False` and any other integer to `True`, also negative numbers. | `a: INT` | `BOOLEAN` |
 | `FloatToInt` | Converts a float to an integer using Python `int()` truncation. | `a: FLOAT` | `INT` |
 | `IntToFloat` | Converts an integer to a float. | `a: INT` | `FLOAT` |
 | `IntToNumber` | Passes an integer as a generic number. | `a: INT` | `NUMBER` |
