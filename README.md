@@ -1,8 +1,15 @@
-# ComfyMath (updated)
+# ComfyMath-NG
 
-ComfyMath provides math and utility nodes for [ComfyUI](https://github.com/comfyanonymous/ComfyUI).
+ComfyMath-NG provides math and utility nodes for [ComfyUI](https://github.com/comfyanonymous/ComfyUI).
 
-The package currently registers **63 custom nodes** under the `math/...` categories. Most operation nodes expose an `op` dropdown, so one node can perform several related operations.
+It is a maintained fork of the original ComfyMath project and preserves the existing node identifiers for compatibility with existing workflows.
+
+The package currently registers **63 custom nodes** under the `math/...` categories. Most operation nodes expose an op dropdown, allowing a single node to perform several related operations.
+
+> [!IMPORTANT]
+> ComfyMath-NG is intended as a replacement for the original ComfyMath installation.
+> Remove or disable the original ComfyMath package before installing ComfyMath-NG.
+> Both packages register the same node identifiers and should not be enabled simultaneously.
 
 ## Features
 
@@ -18,10 +25,12 @@ Provides nodes for:
 
 ## Installation
 
+Remove or disable the original ComfyMath installation before installing ComfyMath-NG.
+
 From the `custom_nodes` directory in your ComfyUI installation, run:
 
 ```sh
-git clone https://github.com/rabanti-github/ComfyMath.git
+git clone https://github.com/rabanti-github/ComfyMath.git ComfyMath-NG
 ```
 
 Restart ComfyUI after installation. Nodes are displayed without the internal `CM_` prefix.
