@@ -1,5 +1,13 @@
 # Change Log
 
+## v 0.1.4
+
+Date: 2026-07-26
+
+- Formal update: Added node_list.json; Adapted project file
+- Added tests
+
+
 ## v 0.1.3
 
 Date: 2026-07-25
