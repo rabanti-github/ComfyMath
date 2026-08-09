@@ -4,7 +4,7 @@ ComfyMath-NG provides math and utility nodes for [ComfyUI](https://github.com/co
 
 It is a maintained fork of the original ComfyMath project and preserves the existing node identifiers for compatibility with existing workflows.
 
-The package currently registers **63 custom nodes** under the `math/...` categories. Most operation nodes expose an op dropdown, allowing a single node to perform several related operations.
+The package currently registers **64 custom nodes** under the `math/...` categories. Most operation nodes expose an op dropdown, allowing a single node to perform several related operations.
 
 > [!IMPORTANT]
 > ComfyMath-NG is intended as a replacement for the original ComfyMath installation.
@@ -17,6 +17,7 @@ Provides nodes for:
 
 * Boolean logic
 * Integer, float, and generic number arithmetic
+* Integer randomization with range constraints
 * Numeric comparisons and conditions
 * Conditional value selection and conditional arithmetic fallbacks
 * Vec2, Vec3, and Vec4 arithmetic, scalar operations, and vector checks
@@ -66,8 +67,11 @@ Restart ComfyUI after installation. Nodes are displayed without the internal `CM
 | `IntUnaryCondition` | Tests one integer value. Conditions: zero/non-zero, positive/negative, even/odd. | `op`, `a: INT` | `BOOLEAN` |
 | `IntBinaryOperation` | Applies a binary integer operation. Operations include arithmetic, bitwise logic, shifts, `Max`, and `Min`. | `op`, `a: INT`, `b: INT` | `INT` |
 | `IntBinaryCondition` | Compares two integer values. Conditions: `Eq`, `Neq`, `Gt`, `Lt`, `Geq`, `Leq`. | `op`, `a: INT`, `b: INT` | `BOOLEAN` |
+| `RandomInt` | Returns a fixed, incremented, decremented, or randomized integer within a selected range constraint or custom limits. | `value: INT`, `constraint`, `min: INT`, `max: INT`, `control_after_generation` | `INT` |
 | `IntUnaryOperationConditional` | Applies a unary integer operation only when `condition` is true; otherwise returns `a` or `fallback_value`. | `condition: BOOLEAN`, `fallback_mode`, `fallback_value: INT`, `op`, `a: INT` | `INT` |
 | `IntBinaryOperationConditional` | Applies a binary integer operation only when `condition` is true; otherwise returns `a`, `b`, or `fallback_value`. | `condition: BOOLEAN`, `fallback_mode`, `fallback_value: INT`, `op`, `a: INT`, `b: INT` | `INT` |
+
+`RandomInt` uses signed 64-bit integer fields. The `constraint` dropdown limits generated or stepped values to `Full range`, `1 to max Int`, `0 to max Int`, `Min int to -1`, `Min int to 0`, or `Custom min/max`. The `min` and `max` fields default to `-1` and `1`; they are always visible and are only used when `Custom min/max` is selected. The `control_after_generation` dropdown can keep the value `Fixed`, `Increment` it, `Decrement` it, or `Randomize` a new value when the workflow triggers the node. Generated, incremented, and decremented values are written back to the visible `value` widget after execution.
 
 #### Integer Operators
 

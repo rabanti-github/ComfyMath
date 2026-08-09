@@ -1,13 +1,31 @@
 import unittest
 
 from src.comfymath.int import (
+    INT_MAX,
+    INT_MIN,
     IntBinaryCondition,
     IntBinaryOperation,
     IntBinaryOperationConditional,
     IntUnaryCondition,
     IntUnaryOperation,
     IntUnaryOperationConditional,
+    RandomInt,
 )
+
+
+def _random_int_result(output: dict[str, object]) -> int:
+    result = output["result"]
+    assert isinstance(result, tuple)
+    value = result[0]
+    assert isinstance(value, int)
+    return value
+
+
+def _assert_random_int_output(
+    test_case: unittest.TestCase, output: dict[str, object], expected: int
+) -> None:
+    test_case.assertEqual(_random_int_result(output), expected)
+    test_case.assertEqual(output["ui"], {"value": [expected]})
 
 
 # Int Unary Operation Tests
@@ -210,6 +228,115 @@ class IntBinaryConditionTest(unittest.TestCase):
             with self.subTest(operator=operator, givenA=givenA, givenB=givenB, expected=expected,):
                 result = operation.op(operator, givenA, givenB)
                 self.assertEqual(result, (expected,))
+
+
+class RandomIntTest(unittest.TestCase):
+    def test_randomize_respects_constraints(self) -> None:
+        cases = [
+            ("Full range", 0, 0, INT_MIN, INT_MAX),
+            ("1 to max Int", 0, 0, 1, INT_MAX),
+            ("0 to max Int", 0, 0, 0, INT_MAX),
+            ("Min int to -1", 0, 0, INT_MIN, -1),
+            ("Min int to 0", 0, 0, INT_MIN, 0),
+            ("Custom min/max", -3, 4, -3, 4),
+        ]
+
+        for constraint, custom_min, custom_max, minimum, maximum in cases:
+            operation = RandomInt()
+            with self.subTest(constraint=constraint):
+                for _ in range(100):
+                    result = operation.op(
+                        0, constraint, custom_min, custom_max, "Randomize"
+                    )
+                    value = _random_int_result(result)
+                    self.assertGreaterEqual(value, minimum)
+                    self.assertLessEqual(value, maximum)
+                    self.assertEqual(result["ui"], {"value": [value]})
+
+    def test_randomize_respects_custom_limits(self) -> None:
+        cases = [
+            (1, 5),
+            (-5, -1),
+            (7, 7),
+            (4, -3),
+        ]
+
+        for custom_min, custom_max in cases:
+            expected_min = min(custom_min, custom_max)
+            expected_max = max(custom_min, custom_max)
+            operation = RandomInt()
+            with self.subTest(custom_min=custom_min, custom_max=custom_max):
+                for _ in range(100):
+                    result = operation.op(
+                        0, "Custom min/max", custom_min, custom_max, "Randomize"
+                    )
+                    value = _random_int_result(result)
+                    self.assertGreaterEqual(value, expected_min)
+                    self.assertLessEqual(value, expected_max)
+                    self.assertEqual(result["ui"], {"value": [value]})
+
+    def test_fixed_returns_provided_value(self) -> None:
+        operation = RandomInt()
+
+        _assert_random_int_output(
+            self, operation.op(42, "Full range", -1, 1, "Fixed"), 42
+        )
+        _assert_random_int_output(
+            self, operation.op(42, "Full range", -1, 1, "Fixed"), 42
+        )
+        _assert_random_int_output(
+            self, operation.op(-12, "Full range", -1, 1, "Fixed"), -12
+        )
+
+    def test_increment_uses_state_and_clamps_to_constraint(self) -> None:
+        operation = RandomInt()
+
+        _assert_random_int_output(
+            self, operation.op(1, "Full range", -1, 1, "Increment"), 2
+        )
+        _assert_random_int_output(
+            self, operation.op(1, "Full range", -1, 1, "Increment"), 3
+        )
+        _assert_random_int_output(
+            self,
+            operation.op(INT_MAX, "Full range", -1, 1, "Increment"),
+            INT_MAX,
+        )
+        _assert_random_int_output(
+            self, operation.op(-1, "1 to max Int", -10, 10, "Increment"), 1
+        )
+        _assert_random_int_output(
+            self, operation.op(2, "Custom min/max", -1, 1, "Increment"), 1
+        )
+
+    def test_decrement_uses_state_and_clamps_to_constraint(self) -> None:
+        operation = RandomInt()
+
+        _assert_random_int_output(
+            self, operation.op(1, "Full range", -1, 1, "Decrement"), 0
+        )
+        _assert_random_int_output(
+            self, operation.op(1, "Full range", -1, 1, "Decrement"), -1
+        )
+        _assert_random_int_output(
+            self,
+            operation.op(INT_MIN, "Full range", -1, 1, "Decrement"),
+            INT_MIN,
+        )
+        _assert_random_int_output(
+            self, operation.op(1, "Min int to -1", -10, 10, "Decrement"), -1
+        )
+        _assert_random_int_output(
+            self, operation.op(-2, "Custom min/max", -1, 1, "Decrement"), -1
+        )
+
+    def test_is_changed_matches_control_mode(self) -> None:
+        self.assertFalse(RandomInt.IS_CHANGED(0, "Full range", -1, 1, "Fixed"))
+
+        for control in ("Increment", "Decrement", "Randomize"):
+            with self.subTest(control=control):
+                result = RandomInt.IS_CHANGED(0, "Full range", -1, 1, control)
+                self.assertNotEqual(result, result)
 
 
 # Unary Int Tests (Conditional Operation)

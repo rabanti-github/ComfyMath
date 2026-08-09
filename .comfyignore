@@ -1,3 +1,4 @@
 # Development-only assets
 tests/
 AGENTS.md
+poetry.lock

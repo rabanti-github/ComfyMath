@@ -1,5 +1,14 @@
 # Change Log
 
+## v 0.1.6
+
+Date: 2026-08-09
+
+- Added `RandomInt` for fixed, stepped, or randomized integer values with selectable range constraints and custom min/max limits.
+- Added a frontend update hook so `RandomInt` writes generated values back to its visible value field.
+
+---
+
 ## v 0.1.4 - 0.1.5
 
 Date: 2026-07-26

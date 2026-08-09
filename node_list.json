@@ -19,6 +19,7 @@
   "CM_IntUnaryCondition": "Tests one integer for zero, sign, or parity conditions.",
   "CM_IntBinaryOperation": "Applies a binary integer operation such as arithmetic, bitwise logic, shifts, maximum, or minimum.",
   "CM_IntBinaryCondition": "Compares two integers with equality or ordering conditions.",
+  "CM_IntRandomNumber": "Returns a fixed, incremented, decremented, or randomized integer within a selected range constraint or custom limits.",
   "CM_IntUnaryOperationConditional": "Conditionally applies a unary integer operation, otherwise returning the input or a fallback value.",
   "CM_IntBinaryOperationConditional": "Conditionally applies a binary integer operation, otherwise returning one input or a fallback value.",
   "CM_FloatUnaryOperation": "Applies a unary float operation such as arithmetic, logarithmic, trigonometric, rounding, or gamma functions.",

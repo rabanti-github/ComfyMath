@@ -1,13 +1,13 @@
 [project]
 name = "comfymath-ng"
-version = "0.1.5"
-description = "A maintained fork of ComfyMath, provides Math Nodes for ComfyUI. Boolean Logic, Integer Arithmetic, Floating Point Arithmetic and Functions, Vec2, Vec3, and Vec4 Arithmetic and Functions"
+version = "0.1.6"
+description = "A maintained fork of ComfyMath, provides Math Nodes for ComfyUI. Boolean Logic, Integer Arithmetic and Randomization, Floating Point Arithmetic and Functions, Vec2, Vec3, and Vec4 Arithmetic and Functions"
 authors = [
-    "Evan Spearman <evan@spearman.mb.ca>",
-    "Raphael Stoeckli <https://github.com/rabanti-github>",
+    {name = "Evan Spearman", email = "evan@spearman.mb.ca"},
+    {name = "Raphael Stoeckli"},
 ]
 license = {file = "LICENSE"}
-readme =  {file = "README.md"}
+readme = "README.md"
 
 [tool.comfy]
 PublisherId = "rabanti"

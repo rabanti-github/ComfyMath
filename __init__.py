@@ -27,3 +27,6 @@ def remove_cm_prefix(node_mapping: str) -> str:
 
 
 NODE_DISPLAY_NAME_MAPPINGS = {key: remove_cm_prefix(key) for key in NODE_CLASS_MAPPINGS}
+NODE_DISPLAY_NAME_MAPPINGS["CM_IntRandomNumber"] = "RandomInt"
+
+WEB_DIRECTORY = "./src/comfymath/web/js"
